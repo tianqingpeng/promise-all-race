@@ -1,4 +1,4 @@
-# promise-all-race
+## promise-all-race
 
 ```
  解决异步问题
@@ -25,4 +25,7 @@ then 的使用方式  普通值意味着不是promise
 Promise.finally()
 1. 无论如何都会执行(没有参数)
 2、如果返回一个promise会等待这个promise也执行完毕，（如果是失败的promise，会用他失败原因传给下一个）
+
+
+es2020新特性  promise.settleAll 可了解
 ```
