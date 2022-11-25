@@ -9,7 +9,7 @@ const resolvePromise = (promise2, x, resolve, reject) => {
     let thenCalledOrThrow = false;
   
     if (promise2 === x) {
-      return reject(new TypeError('Chaining cycle detected for promise!'));
+       return reject(new TypeError('Chaining cycle detected for promise!'));
     }
   
     if (x !== null && (typeof x === 'object' || typeof x === 'function')) {
