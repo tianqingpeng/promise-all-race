@@ -6,6 +6,8 @@ const STATUSENUM = {
 
 const resolvePromise = (promise2, x, resolve, reject) => {
     let then;
+    // 为了兼容考虑别人的promise，所以需要在自己的promise里面判断，
+    // 如果调用成功不能失败，调用失败不能成功，既不能多次调用成功或失败
     let thenCalledOrThrow = false;
   
     if (promise2 === x) {
@@ -45,12 +47,12 @@ const resolvePromise = (promise2, x, resolve, reject) => {
 class Promise {
     static resolve (value) {
         return new Promise((rel, reject) => {
-            rel(value);
+            rel(value); // rel方法里面放一个promise，会等待参数中的promise执行完毕
         })
     }
     static reject (value) {
         return new Promise((resolve, rej) => {
-            rej(value);
+            rej(value); // rej方法里面放一个promise，则不会等待参数中的promise执行完毕
         })
     }
     constructor(executor) {
@@ -98,7 +100,7 @@ class Promise {
     // 情况2: x是一个普通值会把这个值作为外层的下一个then的 成功回调中
     // 情况3: 抛出一个异常
     then(onResolved, onRejected) {
-        // 可选参数处理, 解决参数穿透
+        // 可选参数处理, 解决参数穿透  new promise(reslove, reject).then().then().then((data) => {console.log(data))})
         onResolved = typeof onResolved === 'function' ? onResolved: val => val;
         onRejected = typeof onRejected === 'function' ? onRejected: val => {throw err};
 
